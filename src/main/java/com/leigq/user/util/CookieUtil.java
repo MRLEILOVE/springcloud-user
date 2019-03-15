@@ -1,10 +1,13 @@
 package com.leigq.user.util;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * ClassName
+ * CookieUtil
  * <p>
  * 创建人：LeiGQ <br>
  * 创建时间：2019-03-14 20:37 <br>
@@ -22,5 +25,17 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
+    }
+
+    public static Cookie get(HttpServletRequest request, String name) {
+        final Cookie[] cookies = request.getCookies();
+        if (ArrayUtils.isNotEmpty(cookies)) {
+            for (Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    return cookie;
+                }
+            }
+        }
+        return null;
     }
 }
